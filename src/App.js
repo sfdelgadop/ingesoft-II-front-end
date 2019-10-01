@@ -25,9 +25,9 @@ class App extends Component {
             <Menu dishes={this.state.dishes} />
           </div>
           <div  className="col-3">
-            <p>perra vida</p>
-            <p>aqui iran un poco de pendejadas</p>
-            <p>aqui tambien</p>
+            <p>Perfil</p>
+            <p>Filtros</p>
+            <p>Cuadros bonitos</p>
           </div>
         </div>
       </div>
