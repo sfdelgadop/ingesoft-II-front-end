@@ -5,6 +5,9 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
+const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
+const isNumber = (val) => !isNaN(Number(val));
+
 
 
 class UserCreationForm extends Component {
@@ -29,16 +32,36 @@ class UserCreationForm extends Component {
 		this.toggleModal();
 		console.log("el json es " + JSON.stringify(values));
 		alert("El json es " + JSON.stringify(values));
-
 	}
 	render() {
 		return (
 			<div>
-				<Button outline onClick={this.toggleModal}><span>Login</span></Button>
+				<Button outline onClick={this.toggleModal}><span>Crear Usuario</span></Button>
 				<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} >
-					<ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
+					<ModalHeader toggle={this.toggleModal}>Crear Usuario</ModalHeader>
 					<ModalBody>
 						<LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+						<Row className="form-group">
+							<Label htmlFor="email" md={2}>Email</Label>
+								<Col md={10}>
+									<Control.text model=".email" id="email" name="email"
+										placeholder="Email"
+										className="form-control"
+										validators={{
+											required, validEmail
+										}}
+									/>
+									<Errors
+										className="text-danger"
+										model=".email"
+										show="touched"
+										messages={{
+											required: 'Required',
+											validEmail: 'Invalid Email Address'
+										}}
+									/>
+								</Col>
+							</Row>
 							<Row className="form-group">
 								<Label htmlFor="username" md={2}>Usuario</Label>
 								<Col md={10}>
@@ -84,9 +107,33 @@ class UserCreationForm extends Component {
 								</Col>
 							</Row>
 							<Row className="form-group">
+								<Label htmlFor="telnum" md={2}>Contact Tel.</Label>
+								<Col md={10}>
+									<Control.text model=".telnum" id="telnum" name="telnum"
+										placeholder="Tel. Number"
+										className="form-control"
+										validators={{
+											required, minLength: minLength(3), maxLength: maxLength(15), isNumber
+										}}
+									/>
+									<Errors
+										className="text-danger"
+										model=".telnum"
+										show="touched"
+										messages={{
+											required: 'Required',
+											minLength: 'Must be greater than 2 numbers',
+											maxLength: 'Must be 15 numbers or less',
+											isNumber: 'Must be a number'
+										}}
+									/>
+								</Col>
+							</Row>
+
+							<Row className="form-group">
 								<Col md={{ size: 10, offset: 2 }}>
 									<Button type="submit">
-										Login
+										Crear
                   </Button>
 								</Col>
 							</Row>
