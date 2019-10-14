@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Button} from 'reactstrap';
+import LoginForm from './LoginComponent';
 
 class Options extends Component {
 
@@ -18,6 +19,7 @@ class Options extends Component {
                         <br/>
                         <Button color="secondary" size="lg" block >Tipo de comida</Button>{' '}
                         <br/>
+                        <LoginForm postLogin={this.props.postLogin} />
                     </div>
                 </div>
             </div>

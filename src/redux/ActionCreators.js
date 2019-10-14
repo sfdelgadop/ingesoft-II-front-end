@@ -145,3 +145,34 @@ export const addPromos = (promos) => ({
     type: ActionTypes.ADD_PROMOS,
     payload: promos
 });
+
+export const postLogin = (username, password) => (dispatch) => {
+
+  const newLogin = {
+      username: username,
+      password: password
+  };
+  
+  return fetch(baseUrl + 'login', {
+      method: "POST",
+      body: JSON.stringify(newLogin),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "same-origin"
+  })
+  .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+    error => {
+      throw error;
+    })
+  .then(response => response.json())
+  .catch(error =>  { console.log('post login', error.message); alert('no se pudo completar \nError: '+error.message); });
+};

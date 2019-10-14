@@ -5,7 +5,7 @@ import Menu from './MenuComponent';
 import Contact from './ContactComponent';
 import DishDetail from './DishdetailComponent';
 import Options from './OptionsComponent';
-import { postComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
+import { postComment, postLogin, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 
@@ -22,6 +22,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   
   postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
+  postLogin: (username,pasword) => dispatch(postLogin(username,pasword)),
   fetchDishes: () => { dispatch(fetchDishes())},
   fetchComments: () => dispatch(fetchComments()),
   fetchPromos: () => dispatch(fetchPromos())
@@ -69,8 +70,8 @@ class Main extends Component {
             </Switch>
           </div>
           <div className="col-4">
-            <Header />
-            <Options/>
+            <Header/>
+            <Options postLogin = {this.props.postLogin}/>
           </div>
         </div>
         <div className="row">
