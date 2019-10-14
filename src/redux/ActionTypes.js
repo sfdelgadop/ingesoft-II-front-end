@@ -8,3 +8,5 @@ export const ADD_DISHES = 'ADD_DISHES';
 export const PROMOS_LOADING = 'PROMOS_LOADING';
 export const ADD_PROMOS = 'ADD_PROMOS';
 export const PROMOS_FAILED = 'PROMOS_FAILED';
+export const ADD_USERS = 'ADD_COMMENTS';
+export const USERS_FAILED = 'COMMENTS_FAILED';

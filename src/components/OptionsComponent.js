@@ -21,7 +21,7 @@ class Options extends Component {
 						<Button color="secondary" size="lg" block >Tipo de comida</Button>{' '}
 						<br />
 					</div>
-					<UserCreation/>
+					<UserCreation postUser = {this.props.postUser}/>
 				</div>
 			</div>
 		);

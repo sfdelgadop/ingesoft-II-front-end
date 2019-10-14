@@ -30,8 +30,8 @@ class UserCreationForm extends Component {
 
 	handleSubmit(values) {
 		this.toggleModal();
-		console.log("el json es " + JSON.stringify(values));
-		alert("El json es " + JSON.stringify(values));
+		this.props.postUser(values.email, values.username, values.password, values.telnum);
+
 	}
 	render() {
 		return (
