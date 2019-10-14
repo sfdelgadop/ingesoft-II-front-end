@@ -20,9 +20,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  
+
   postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
-  fetchDishes: () => { dispatch(fetchDishes())},
+  fetchDishes: () => { dispatch(fetchDishes()) },
   fetchComments: () => dispatch(fetchComments()),
   fetchPromos: () => dispatch(fetchPromos())
 });
@@ -40,17 +40,17 @@ class Main extends Component {
   }
 
   onDishSelect(dishId) {
-    this.setState({ selectedDish: dishId});
+    this.setState({ selectedDish: dishId });
   }
 
   render() {
 
-    const DishWithId = ({match}) => {
-      return(
-        <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]}
+    const DishWithId = ({ match }) => {
+      return (
+        <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]}
           isLoading={this.props.dishes.isLoading}
           errMess={this.props.dishes.errMess}
-          comments={this.props.comments.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))}
+          comments={this.props.comments.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10))}
           commentsErrMess={this.props.comments.errMess}
           postComment={this.props.postComment}
         />
@@ -62,25 +62,25 @@ class Main extends Component {
         <div className="row">
           <div className="col-8">
             <Switch>
-                <Route exact path='/menu' component={() => <Menu dishes={this.props.dishes} />} />
-                <Route path='/menu/:dishId' component={DishWithId} />
-                <Route exact path='/contactus' component={Contact} />} />
+              <Route exact path='/menu' component={() => <Menu dishes={this.props.dishes} />} />
+              <Route path='/menu/:dishId' component={DishWithId} />
+              <Route exact path='/contactus' component={Contact} />} />
                 <Redirect to="/menu" />
             </Switch>
           </div>
           <div className="col-4">
             <Header />
-            <Options/>
+            <Options />
           </div>
         </div>
         <div className="row">
-          <div className = "col-12">
-            <Footer/>
+          <div className="col-12">
+            <Footer />
           </div>
         </div>
 
       </div>
-      
+
     );
   }
 }
