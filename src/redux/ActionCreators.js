@@ -190,3 +190,35 @@ export const postUser = (username, password, email, telnum) => (dispatch) => {
     .catch(error => { console.log('post users', error.message); 
     alert('Your user could not be posted\nError: ' + error.message); });
 };
+
+
+export const postLogin = (username, password) => (dispatch) => {
+
+  const newLogin = {
+      username: username,
+      password: password
+  };
+  
+  return fetch(baseUrl + 'login', {
+      method: "POST",
+      body: JSON.stringify(newLogin),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "same-origin"
+  })
+  .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+    error => {
+      throw error;
+    })
+  .then(response => response.json())
+  .catch(error =>  { console.log('post login', error.message); alert('no se pudo completar \nError: '+error.message); });
+};

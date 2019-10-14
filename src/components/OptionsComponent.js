@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import { Button } from 'reactstrap';
+import React, {Component} from 'react';
+import {Button} from 'reactstrap';
+import LoginForm from './LoginComponent';
 import UserCreation from'./UserCreationComponent';
-
 
 class Options extends Component {
 
 	render() {
-
 		return (
 			<div className="container">
 				<div className="row row-content">
@@ -22,10 +21,10 @@ class Options extends Component {
 						<br />
 					</div>
 					<UserCreation postUser = {this.props.postUser}/>
+          <LoginForm postLogin={this.props.postLogin} />
 				</div>
 			</div>
 		);
 	}
 }
-
 export default Options;

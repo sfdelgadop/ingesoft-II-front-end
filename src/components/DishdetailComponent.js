@@ -129,7 +129,7 @@ class CommentForm extends Component {
 								<Col md={{ size: 10, offset: 2 }}>
 									<Button type="submit">
 										Enviar
-                                    </Button>
+                  </Button>
 								</Col>
 							</Row>
 						</LocalForm>
