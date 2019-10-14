@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Menu from './MenuComponent';
-import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import DishDetail from './DishdetailComponent';
-import About from './ContactComponent'
+import Options from './OptionsComponent';
 import { postComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
@@ -46,17 +45,6 @@ class Main extends Component {
 
   render() {
 
-    const HomePage = () => {
-      return(
-          <Home 
-              dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
-              dishesLoading={this.props.dishes.isLoading}
-              dishesErrMess={this.props.dishes.errMess}
-              leader={this.props.leaders.filter((leader) => leader.featured)[0]}
-          />
-      );
-    }
-
     const DishWithId = ({match}) => {
       return(
         <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]}
@@ -71,19 +59,28 @@ class Main extends Component {
 
     return (
       <div>
-        <Header />
-        <div>
-          <Switch>
-              <Route path='/home' component={HomePage} />
-              <Route exact path='/aboutus' component={() => <About leaders={this.props.leaders} />} />} />
-              <Route exact path='/menu' component={() => <Menu dishes={this.props.dishes} />} />
-              <Route path='/menu/:dishId' component={DishWithId} />
-              <Route exact path='/contactus' component={Contact} />} />
-              <Redirect to="/home" />
-          </Switch>
+        <div className="row">
+          <div className="col-8">
+            <Switch>
+                <Route exact path='/menu' component={() => <Menu dishes={this.props.dishes} />} />
+                <Route path='/menu/:dishId' component={DishWithId} />
+                <Route exact path='/contactus' component={Contact} />} />
+                <Redirect to="/menu" />
+            </Switch>
+          </div>
+          <div className="col-4">
+            <Header />
+            <Options/>
+          </div>
         </div>
-        <Footer />
+        <div className="row">
+          <div className = "col-12">
+            <Footer/>
+          </div>
+        </div>
+
       </div>
+      
     );
   }
 }
