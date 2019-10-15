@@ -30,7 +30,8 @@ class UserCreationForm extends Component {
 
 	handleSubmit(values) {
 		this.toggleModal();
-		this.props.postUser(values.email, values.username, values.password, values.telnum);
+		this.props.postUser(values.firstName, values.lastName, values.username, 
+			values.email, values.password, values.age, values.gender);
 
 	}
 	render() {
@@ -41,23 +42,46 @@ class UserCreationForm extends Component {
 					<ModalHeader toggle={this.toggleModal}>Crear Usuario</ModalHeader>
 					<ModalBody>
 						<LocalForm onSubmit={(values) => this.handleSubmit(values)}>
-						<Row className="form-group">
-							<Label htmlFor="email" md={2}>Email</Label>
+							<Row className="form-group">
+								<Label htmlFor="firstName" md={2}>Nombres</Label>
 								<Col md={10}>
-									<Control.text model=".email" id="email" name="email"
-										placeholder="Email"
+									<Control.text model=".firstName" id="firstName" name="firstName"
+										placeholder="Nombres"
 										className="form-control"
 										validators={{
-											required, validEmail
+											required, minLength: minLength(3), maxLength: maxLength(15)
 										}}
 									/>
 									<Errors
 										className="text-danger"
-										model=".email"
+										model=".firstName"
 										show="touched"
 										messages={{
 											required: 'Required',
-											validEmail: 'Invalid Email Address'
+											minLength: 'Debe ser más largo de 2 carácteres',
+											maxLength: 'Debe ser de 15 carácteres o menos'
+										}}
+									/>
+								</Col>
+							</Row>
+							<Row className="form-group">
+								<Label htmlFor="lastName" md={2}>Apelldos</Label>
+								<Col md={10}>
+									<Control.text model=".lastName" id="lastName" name="lastName"
+										placeholder="Apellidos"
+										className="form-control"
+										validators={{
+											required, minLength: minLength(3), maxLength: maxLength(15)
+										}}
+									/>
+									<Errors
+										className="text-danger"
+										model=".lastName"
+										show="touched"
+										messages={{
+											required: 'Required',
+											minLength: 'Debe ser más largo de 2 carácteres',
+											maxLength: 'Debe ser de 15 carácteres o menos'
 										}}
 									/>
 								</Col>
@@ -84,6 +108,28 @@ class UserCreationForm extends Component {
 									/>
 								</Col>
 							</Row>
+
+							<Row className="form-group">
+								<Label htmlFor="email" md={2}>Email</Label>
+								<Col md={10}>
+									<Control.text model=".email" id="email" name="email"
+										placeholder="Email"
+										className="form-control"
+										validators={{
+											required, validEmail
+										}}
+									/>
+									<Errors
+										className="text-danger"
+										model=".email"
+										show="touched"
+										messages={{
+											required: 'Required',
+											validEmail: 'Invalid Email Address'
+										}}
+									/>
+								</Col>
+							</Row>
 							<Row className="form-group">
 								<Label htmlFor="password" md={2}>Contraseña</Label>
 								<Col md={10}>
@@ -106,19 +152,33 @@ class UserCreationForm extends Component {
 									/>
 								</Col>
 							</Row>
+
 							<Row className="form-group">
-								<Label htmlFor="telnum" md={2}>Contact Tel.</Label>
+								<Label htmlFor="gender" md={8}>Tu género</Label>
+								<Col md={4}>
+									<Control.select model=".gender" id="gender" name="gender"
+										className="form-control">
+										<option> </option>
+										<option>Másculino</option>
+										<option>Femenino</option>
+										<option>Otro</option>
+									</Control.select>
+								</Col>
+							</Row>
+
+							<Row className="form-group">
+								<Label htmlFor="age" md={2}>edad.</Label>
 								<Col md={10}>
-									<Control.text model=".telnum" id="telnum" name="telnum"
-										placeholder="Tel. Number"
+									<Control.text model=".age" id="age" name="age"
+										placeholder="edad"
 										className="form-control"
 										validators={{
-											required, minLength: minLength(3), maxLength: maxLength(15), isNumber
+											required, minLength: minLength(0), maxLength: maxLength(3), isNumber
 										}}
 									/>
 									<Errors
 										className="text-danger"
-										model=".telnum"
+										model=".age"
 										show="touched"
 										messages={{
 											required: 'Required',
