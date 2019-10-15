@@ -4,20 +4,14 @@ import { NavLink } from 'react-router-dom';
 import { MDBInput, MDBCol,MDBFormInline,MDBIcon,MDBBtn } from "mdbreact";
 
 class Header extends Component {
-    constructor(props) {
-        super(props);
-    
-        this.toggleNav = this.toggleNav.bind(this);
-        this.state = {
-          isNavOpen: false
-        };
-      }
+	constructor(props) {
+		super(props);
 
-      toggleNav() {
-        this.setState({
-          isNavOpen: !this.state.isNavOpen
-        });
-      }
+		this.toggleNav = this.toggleNav.bind(this);
+		this.state = {
+			isNavOpen: false
+		};
+	}
 
     render() {
         return(
