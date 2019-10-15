@@ -41,12 +41,13 @@ class Header extends Component {
                             <NavItem>
                                 <NavLink /*style={{color: 'white'}}*/ className="nav-link" to='/contactus'><span className="fa fa-address-card fa-lg"></span> Contáctanos</NavLink>
                             </NavItem>
-                            </Nav>
+                            </Nav>  
                         </Collapse>
-                        <MDBCol md="15">
+                        <MDBCol md="13">
                             <MDBFormInline className="md-form">
                                 <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
-                            </MDBFormInline>
+                                <MDBBtn outline color="dark" color="dark" rounded size="sm" type="submit" className="mr-auto">Search</MDBBtn>
+                            </MDBFormInline>                             
                         </MDBCol>                        
                         <a  href="Al componente login supongo :V"><img src='assets/images/Login.png' height="50" width="70" alt='Ristorante Con Fusion' /> </a>
                     </div>
