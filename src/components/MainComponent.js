@@ -22,7 +22,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
 
   postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
-  postUser:(username, password, email, telnum) => dispatch(postUser(username, password, email, telnum)),
+  postUser:(firstName, lastName, username, email, password, age, gender) => dispatch(postUser(firstName, lastName, username, email, password, age, gender)),
   postLogin: (username,pasword) => dispatch(postLogin(username,pasword)),
   fetchDishes: () => { dispatch(fetchDishes())},
   fetchComments: () => dispatch(fetchComments()),
@@ -72,7 +72,8 @@ class Main extends Component {
           </div>
           <div className="col-4">
             <Header />
-            <Options postLogin = {this.props.postLogin postUser={this.props.postUser}/>
+            <Options postLogin = {this.props.postLogin} 
+                    postUser={this.props.postUser}/>
           </div>
         </div>
         <div className="row">

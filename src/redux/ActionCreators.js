@@ -16,6 +16,8 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) => {
   };
   newComment.date = new Date().toISOString();
 
+  alert("El json es " + JSON.stringify(newComment));
+
   return fetch(baseUrl + 'comments', {
     method: "POST",
     body: JSON.stringify(newComment),
@@ -156,13 +158,16 @@ export const UsersFailed = (errmess) => ({
   payload: errmess
 });
 
-export const postUser = (username, password, email, telnum) => (dispatch) => {
+export const postUser = (firstName, lastName, username, email, password, age, gender) => (dispatch) => {
 
   const newUser = {
+    firstName: firstName,
+    lastName: lastName,
     username: username,
-    password: password,
     email: email,
-    telnum: telnum
+    password: password,
+    age: age,
+    gender: gender
   };
 
   return fetch(baseUrl + 'newuser', {
