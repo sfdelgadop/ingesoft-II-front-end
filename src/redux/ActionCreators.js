@@ -18,7 +18,7 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) => {
 
   alert("El json es " + JSON.stringify(newComment));
 
-  return fetch(baseUrl + 'comments', {
+  return fetch(baseUrl + 'crear-comments', {
     method: "POST",
     body: JSON.stringify(newComment),
     headers: {
@@ -47,7 +47,7 @@ export const fetchDishes = () => (dispatch) => {
 
   dispatch(dishesLoading(true));
 
-  return fetch(baseUrl + 'dishes')
+  return fetch(baseUrl + 'ver-recipe')
     .then(response => {
       if (response.ok) {
         return response;
@@ -81,7 +81,7 @@ export const addDishes = (dishes) => ({
 });
 
 export const fetchComments = () => (dispatch) => {
-  return fetch(baseUrl + 'comments')
+  return fetch(baseUrl + 'ver-comments')
     .then(response => {
       if (response.ok) {
         return response;
@@ -170,7 +170,7 @@ export const postUser = (firstName, lastName, username, email, password, age, ge
     gender: gender
   };
 
-  return fetch(baseUrl + 'newuser', {
+  return fetch(baseUrl + 'users', {
     method: "POST",
     body: JSON.stringify(newUser),
     headers: {
