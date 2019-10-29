@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
+// the function that shows the diferent elements in the main menu
 function RenderMenuItem({ dish }) {
 	return (
 		<Card>

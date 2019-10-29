@@ -9,7 +9,7 @@ import { postComment, postUser, postLogin, fetchDishes, fetchComments, fetchProm
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 
-
+//map the diferent data into propeties
 const mapStateToProps = state => {
   return {
     dishes: state.dishes,
@@ -19,6 +19,7 @@ const mapStateToProps = state => {
   }
 }
 
+//map the diferent data from post anfetch into propeties
 const mapDispatchToProps = dispatch => ({
 
   postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
@@ -29,6 +30,7 @@ const mapDispatchToProps = dispatch => ({
   fetchPromos: () => dispatch(fetchPromos())
 });
 
+//main componnent
 class Main extends Component {
 
   constructor(props) {
@@ -46,7 +48,7 @@ class Main extends Component {
   }
 
   render() {
-
+    //pass the props of a dish to the dishDetailComponent
     const DishWithId = ({ match }) => {
       return (
         <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]}

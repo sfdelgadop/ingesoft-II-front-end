@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
-import {Button} from 'reactstrap';
+import React, { Component } from 'react';
+import { Button } from 'reactstrap';
 import LoginForm from './LoginComponent';
-import UserCreation from'./UserCreationComponent';
+import UserCreation from './UserCreationComponent';
 
+// this is the left menu
 class Options extends Component {
 
 	render() {
@@ -20,8 +21,8 @@ class Options extends Component {
 						<Button color="secondary" size="lg" block >Tipo de comida</Button>{' '}
 						<br />
 					</div>
-					<UserCreation postUser = {this.props.postUser}/>
-          <LoginForm postLogin={this.props.postLogin} />
+					<UserCreation postUser={this.props.postUser} />
+					<LoginForm postLogin={this.props.postLogin} />
 				</div>
 			</div>
 		);
