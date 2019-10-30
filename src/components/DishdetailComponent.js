@@ -7,10 +7,12 @@ import {
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
+//declare the diferent conditions of the form
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
 
+//shows the specific dish
 function RenderDish({ dish }) {
 	return (
 		<div className="col-12  m-1">
@@ -25,7 +27,7 @@ function RenderDish({ dish }) {
 	);
 
 }
-
+//shows the comments
 function RenderComments({ comments, postComment, dishId }) {
 	if (comments != null)
 		return (
@@ -47,8 +49,8 @@ function RenderComments({ comments, postComment, dishId }) {
 		)
 }
 
+//The form to add new comments
 class CommentForm extends Component {
-
 
 	constructor(props) {
 		super(props);
@@ -86,6 +88,7 @@ class CommentForm extends Component {
 								<Col md={4}>
 									<Control.select model=".score" id="score" name="score"
 										className="form-control">
+										<option> </option>
 										<option>1</option>
 										<option>2</option>
 										<option>3</option>
@@ -139,7 +142,7 @@ class CommentForm extends Component {
 	}
 }
 
-
+//the main function that define the behavior of the component
 const DishDetail = (props) => {
 	if (props.isLoading) {
 		return (

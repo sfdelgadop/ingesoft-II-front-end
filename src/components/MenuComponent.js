@@ -3,6 +3,7 @@ import { Card, CardImg, CardTitle, CardBody, CardText } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 
+// the function that shows the diferent elements in the main menu
 function RenderMenuItem({ dish }) {
 	return (
 		<Card>
