@@ -1,5 +1,5 @@
 import * as ActionTypes from './ActionTypes';
-
+// the recipes tracking
 export const Dishes = (state = { isLoading: true, errMess: null, dishes:[]}, action) => {
     switch (action.type) {
         case ActionTypes.ADD_DISHES:
