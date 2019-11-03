@@ -33,7 +33,7 @@ class Header extends Component {
 								<MDBBtn outline color="dark" color="dark" rounded size="sm" type="submit" className="mr-auto">Search</MDBBtn>
 							</MDBFormInline>
 						</MDBCol>
-						<a href="Al componente login supongo :V"><img src='assets/images/Login.png' height="50" width="70" alt='Ristorante Con Fusion' /> </a>
+						<a href="/home"><img src='assets/images/Login.png' height="50" width="70" alt='Master Cheif' /> </a>
 					</div>
 				</Navbar>
 			</div>
