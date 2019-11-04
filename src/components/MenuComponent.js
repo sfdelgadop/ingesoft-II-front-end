@@ -1,21 +1,76 @@
-import React from 'react';
-import { Card, CardImg, CardTitle, CardBody, CardText } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
+import {
+	Card, CardImg, CardText, CardBody, Button, Modal, ModalHeader, ModalBody,
+	CardTitle
+} from 'reactstrap';
 import { Loading } from './LoadingComponent';
+import { Link } from 'react-router-dom';
 
-// the function that shows the diferent elements in the main menu
-function RenderMenuItem({ dish }) {
+function RenderDish({ dish }) {
 	return (
-		<Card>
-			<Link to={`/menu/${dish.id}`} >
-				<CardImg width="100%" src={dish.image} alt={dish.name} />
+		<div >
+			<Card>
+				<CardImg top src={dish.image} alt={dish.name} />
 				<CardBody>
 					<CardTitle>{dish.name}</CardTitle>
 					<CardText>{dish.description}</CardText>
 				</CardBody>
-			</Link>
-		</Card>
+			</Card>
+		</div>
 	);
+}
+
+class CommentForm extends Component {
+
+	constructor(props) {
+		super(props);
+		this.toggleModal = this.toggleModal.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+
+		this.state = {
+			isNavOpen: false,
+			isModalOpen: this.props.isModalOpen
+		};
+	}
+
+	toggleModal() {
+		this.setState({
+			isModalOpen: !this.state.isModalOpen
+		})
+	}
+
+	handleSubmit(values) {
+		this.toggleModal();
+
+	}
+	render() {
+		return (
+			<div>
+				<Card onClick={this.toggleModal}>
+					<CardImg width="100%" src={this.props.dish.image} alt={this.props.dish.name} />
+					<CardBody>
+						<CardTitle>{this.props.dish.name}</CardTitle>
+						<CardText>{this.props.dish.description}</CardText>
+					</CardBody>
+				</Card>
+				<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} >
+					<ModalHeader toggle={this.toggleModal}>{this.props.dish.name}</ModalHeader>
+					<ModalBody>
+						<div className="col-12">
+							<RenderDish dish={this.props.dish} />
+						</div>
+						<center>
+							<Link to={`/menu/${this.props.dish.id}`} >
+								<Button >
+									Ver Más
+								</Button>
+							</Link>
+						</center>
+					</ModalBody>
+				</Modal>
+			</div>
+		)
+	}
 }
 
 const Menu = (props) => {
@@ -23,7 +78,7 @@ const Menu = (props) => {
 	const menu = props.dishes.dishes.map((dish) => {
 		return (
 			<div className="col-12 col-md-4" key={dish.id}>
-				<RenderMenuItem dish={dish} onClick={props.onClick} />
+				<CommentForm dish={dish}  />
 			</div>
 		);
 	});
