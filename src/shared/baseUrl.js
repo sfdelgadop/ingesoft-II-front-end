@@ -1,2 +1,2 @@
-//the back-edn URL
-export const baseUrl = 'http://localhost:3000/';
+//the back-end URL
+export const baseUrl = 'http://10.128.0.3:80/';
