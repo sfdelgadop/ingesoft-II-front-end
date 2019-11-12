@@ -5,6 +5,7 @@ import Menu from './MenuComponent';
 import Contact from './ContactComponent';
 import DishDetail from './DishdetailComponent';
 import Options from './OptionsComponent';
+import Create from './DishCreationComponent';
 import { postComment, postUser, postLogin, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
@@ -66,10 +67,11 @@ class Main extends Component {
         <div className="row">
           <div className="col-8">
             <Switch>
-              <Route exact path='/menu' component={() => <Menu dishes={this.props.dishes} />} />
-              <Route path='/menu/:dishId' component={DishWithId} />
-              <Route exact path='/contactus' component={Contact} />} />
-                <Redirect to="/menu" />
+              <Route exact path='/home' component={() => <Menu dishes={this.props.dishes} />} />
+              <Route path='/script/:dishId' component={DishWithId} />
+              <Route exact path='/contactus' component={Contact} />
+              <Route exact path='/create' component={Create}/>
+              <Redirect to="/home" />
             </Switch>
           </div>
           <div className="col-4">
