@@ -1,38 +1,37 @@
-import React, { Component , useCallback } from 'react';
+import React, { Component, useCallback } from 'react';
 import {
-	Button, Label, Col, Row, Breadcrumb, BreadcrumbItem} from 'reactstrap';
+	Button, Label, Col, Row, Breadcrumb, BreadcrumbItem
+} from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
-import {useDropzone} from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
-const isNumber = (val) => !isNaN(Number(val));
-const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
 function Dropzone() {
-  const onDrop = useCallback(acceptedFiles => {
-    const reader = new FileReader()
+	const onDrop = useCallback(acceptedFiles => {
+		const reader = new FileReader()
 
-    reader.onabort = () => alert('file reading was aborted')
-    reader.onerror = () => alert('file reading has failed')
-    reader.onload = () => {
+		reader.onabort = () => alert('file reading was aborted')
+		reader.onerror = () => alert('file reading has failed')
+		reader.onload = () => {
 			const binaryStr = reader.result
-      alert(btoa(binaryStr))
-    }
+			alert(binaryStr)
+		}
 
-		acceptedFiles.forEach(file => reader.readAsArrayBuffer(file))
-  }, [])
-  const {getRootProps, getInputProps} = useDropzone({onDrop})
+		acceptedFiles.forEach(file => reader.readAsDataURL(file))
+	}, [])
+	const { getRootProps, getInputProps } = useDropzone({ onDrop })
 
-  return (
-    <div {...getRootProps()}>
-      <input {...getInputProps()} />
-      <p>Drag 'n' drop some files here,<br/> 
-				or click to select files</p>
-    </div>
-  )
+	return (
+		<div {...getRootProps()}>
+			<input {...getInputProps()} />
+			<p>Arrastra y deja caer la imágenes aquí<br />
+				o has click y selecciona la imagen</p>
+		</div>
+	)
 }
 
 class Create extends Component {
@@ -47,7 +46,7 @@ class Create extends Component {
 		console.log("el json es " + JSON.stringify(values));
 		alert("El json es " + JSON.stringify(values));
 	}
-	
+
 	handleOnDrop = (files, rejectedFiles) => {
 		console.log(files);
 	}
@@ -56,7 +55,7 @@ class Create extends Component {
 
 		return (
 			<div className="container">
-				<div className = "row">
+				<div className="row">
 					<Breadcrumb>
 						<BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
 						<BreadcrumbItem active>Crear receta</BreadcrumbItem>
@@ -68,17 +67,23 @@ class Create extends Component {
 				</div>
 				<div className="row row-content">
 					<div className="col-12">
-						
+
 						<LocalForm onSubmit={(values) => this.handleSubmit(values)}>
-							<Dropzone />
 							<Row className="form-group">
-								<Label htmlFor="firstname" md={2}>First Name</Label>
+								<Label htmlFor="image" md={2}>Imagen</Label>
 								<Col md={10}>
-									<Control.text model=".firstname" id="firstname" name="firstname"
-										placeholder="First Name"
+									<Dropzone />
+								</Col>								
+							</Row>
+							
+							<Row className="form-group">
+								<Label htmlFor="name" md={2}>Nombre de la receta</Label>
+								<Col md={10}>
+									<Control.text model=".name" id="name" name="name"
+										placeholder="Arroz con pollo"
 										className="form-control"
 										validators={{
-											required, minLength: minLength(3), maxLength: maxLength(15)
+											required, minLength: minLength(3), maxLength: maxLength(25)
 										}}
 									/>
 									<Errors
@@ -88,104 +93,28 @@ class Create extends Component {
 										messages={{
 											required: 'Required',
 											minLength: 'Must be greater than 2 characters',
-											maxLength: 'Must be 15 characters or less'
+											maxLength: 'Must be 25 characters or less'
 										}}
 									/>
 								</Col>
 							</Row>
 							<Row className="form-group">
-								<Label htmlFor="lastname" md={2}>Last Name</Label>
+								<Label htmlFor="message" md={2}>Descripción</Label>
 								<Col md={10}>
-									<Control.text model=".lastname" id="lastname" name="lastname"
-										placeholder="Last Name"
-										className="form-control"
-										validators={{
-											required, minLength: minLength(3), maxLength: maxLength(15)
-										}}
-									/>
-									<Errors
-										className="text-danger"
-										model=".lastname"
-										show="touched"
-										messages={{
-											required: 'Required',
-											minLength: 'Must be greater than 2 characters',
-											maxLength: 'Must be 15 characters or less'
-										}}
-									/>
-								</Col>
-							</Row>
-							<Row className="form-group">
-								<Label htmlFor="telnum" md={2}>Contact Tel.</Label>
-								<Col md={10}>
-									<Control.text model=".telnum" id="telnum" name="telnum"
-										placeholder="Tel. Number"
-										className="form-control"
-										validators={{
-											required, minLength: minLength(3), maxLength: maxLength(15), isNumber
-										}}
-									/>
-									<Errors
-										className="text-danger"
-										model=".telnum"
-										show="touched"
-										messages={{
-											required: 'Required',
-											minLength: 'Must be greater than 2 numbers',
-											maxLength: 'Must be 15 numbers or less',
-											isNumber: 'Must be a number'
-										}}
-									/>
-								</Col>
-							</Row>
-							<Row className="form-group">
-								<Label htmlFor="email" md={2}>Email</Label>
-								<Col md={10}>
-									<Control.text model=".email" id="email" name="email"
-										placeholder="Email"
-										className="form-control"
-										validators={{
-											required, validEmail
-										}}
-									/>
-									<Errors
-										className="text-danger"
-										model=".email"
-										show="touched"
-										messages={{
-											required: 'Required',
-											validEmail: 'Invalid Email Address'
-										}}
-									/>
-								</Col>
-							</Row>
-							<Row className="form-group">
-								<Col md={{ size: 6, offset: 2 }}>
-									<div className="form-check">
-										<Label check>
-											<Control.checkbox model=".agree" name="agree"
-												className="form-check-input"
-											/> {' '}
-											<strong>May we contact you?</strong>
-										</Label>
-									</div>
-								</Col>
-								<Col md={{ size: 3, offset: 1 }}>
-									<Control.select model=".contactType" name="contactType"
-										className="form-control">
-										<option>Tel.</option>
-										<option>Email</option>
-									</Control.select>
-								</Col>
-							</Row>
-							<Row className="form-group">
-								<Label htmlFor="message" md={2}>Your Feedback</Label>
-								<Col md={10}>
-									<Control.textarea model=".message" id="message" name="message"
-										rows="12"
+									<Control.textarea model=".description" id="description" name="description"
+										rows="8"
 										className="form-control" />
 								</Col>
 							</Row>
+							<Row className="form-group">
+								<Label htmlFor="message" md={2}>Procedimiento</Label>
+								<Col md={10}>
+									<Control.textarea model=".Procedure" id="procedure" name="procedure"
+										rows="22"
+										className="form-control" />
+								</Col>
+							</Row>
+
 							<Row className="form-group">
 								<Col md={{ size: 10, offset: 2 }}>
 									<Button type="submit" color="primary">
