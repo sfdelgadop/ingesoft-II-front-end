@@ -9,6 +9,19 @@ import { useDropzone } from 'react-dropzone';
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
+var image = "";
+
+function Preview(){
+	if (image === ""){
+		return(
+			<img src='assets/images/drag.png' alt="preview" width="100%" height="100%"/>
+		)
+	}else{
+		return(
+			<img src={image} alt="preview" width="100%" height="100%"/>
+		)
+	}
+}
 
 function Dropzone() {
 	const onDrop = useCallback(acceptedFiles => {
@@ -17,8 +30,9 @@ function Dropzone() {
 		reader.onabort = () => alert('file reading was aborted')
 		reader.onerror = () => alert('file reading has failed')
 		reader.onload = () => {
-			const binaryStr = reader.result
-			alert(binaryStr)
+			const binaryStr = reader.result;
+			image = binaryStr;
+			console.log(binaryStr);
 		}
 
 		acceptedFiles.forEach(file => reader.readAsDataURL(file))
@@ -28,8 +42,16 @@ function Dropzone() {
 	return (
 		<div {...getRootProps()}>
 			<input {...getInputProps()} />
-			<p>Arrastra y deja caer la imágenes aquí<br />
-				o has click y selecciona la imagen</p>
+			<Preview/>
+		</div>
+	)
+}
+
+function LoadIngredients( ingredients ){
+	var data = ingredients.ingredients.dishes.data;
+	console.log(JSON.stringify(data));
+	return(
+		<div>
 		</div>
 	)
 }
@@ -47,12 +69,7 @@ class Create extends Component {
 		alert("El json es " + JSON.stringify(values));
 	}
 
-	handleOnDrop = (files, rejectedFiles) => {
-		console.log(files);
-	}
-
 	render() {
-
 		return (
 			<div className="container">
 				<div className="row">
@@ -73,6 +90,7 @@ class Create extends Component {
 								<Label htmlFor="image" md={2}>Imagen</Label>
 								<Col md={10}>
 									<Dropzone />
+									<LoadIngredients ingredients = {this.props.ingredients} />
 								</Col>								
 							</Row>
 							

@@ -6,7 +6,7 @@ import Contact from './ContactComponent';
 import DishDetail from './DishdetailComponent';
 import Options from './OptionsComponent';
 import Create from './DishCreationComponent';
-import { postComment, postUser, postLogin, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
+import { postComment, postUser, postLogin, fetchDishes, fetchComments, fetchPromos, fetchIngredients } from '../redux/ActionCreators';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 
@@ -16,7 +16,8 @@ const mapStateToProps = state => {
     dishes: state.dishes,
     comments: state.comments,
     promotions: state.promotions,
-    leaders: state.leaders
+    leaders: state.leaders,
+    ingredients: state.ingredients
   }
 }
 
@@ -27,6 +28,7 @@ const mapDispatchToProps = dispatch => ({
   postUser:(firstName, lastName, username, email, password, age, gender) => dispatch(postUser(firstName, lastName, username, email, password, age, gender)),
   postLogin: (username,pasword) => dispatch(postLogin(username,pasword)),
   fetchDishes: () => { dispatch(fetchDishes())},
+  fetchIngredients: () => { dispatch(fetchIngredients())},
   fetchComments: () => dispatch(fetchComments()),
   fetchPromos: () => dispatch(fetchPromos())
 });
@@ -42,6 +44,7 @@ class Main extends Component {
     this.props.fetchDishes();
     this.props.fetchComments();
     this.props.fetchPromos();
+    this.props.fetchIngredients();
   }
 
   onDishSelect(dishId) {
@@ -70,7 +73,7 @@ class Main extends Component {
               <Route exact path='/home' component={() => <Menu dishes={this.props.dishes} />} />
               <Route path='/script/:dishId' component={DishWithId} />
               <Route exact path='/contactus' component={Contact} />
-              <Route exact path='/create' component={Create}/>
+              <Route exact path='/create' component={() => <Create ingredients={this.props.ingredients}/>}/>
               <Redirect to="/home" />
             </Switch>
           </div>

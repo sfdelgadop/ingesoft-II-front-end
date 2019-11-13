@@ -79,6 +79,46 @@ export const addDishes = (dishes) => ({
   type: ActionTypes.ADD_DISHES,
   payload: dishes
 });
+
+//get the ingredients
+
+export const fetchIngredients = () => (dispatch) => {
+
+  dispatch(ingredientsLoading(true));
+
+  return fetch(baseUrl + 'ver-ingredient')
+    .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+      error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      })
+    .then(response => response.json())
+    .then(ingredients => dispatch(addIngredients(ingredients)))
+    .catch(error => dispatch(ingredientsFailed(error.message)));
+}
+
+export const ingredientsLoading = () => ({
+  type: ActionTypes.INGREDIENT_LOADING
+});
+
+export const ingredientsFailed = (errmess) => ({
+  type: ActionTypes.INGREDIENT_FAILED,
+  payload: errmess
+});
+
+export const addIngredients = (ingredients) => ({
+  type: ActionTypes.ADD_INGREDIENT,
+  payload: ingredients
+});
+
 // get the diferent comments
 export const fetchComments = () => (dispatch) => {
   return fetch(baseUrl + 'ver-comments')
@@ -110,6 +150,7 @@ export const addComments = (comments) => ({
   type: ActionTypes.ADD_COMMENTS,
   payload: comments
 });
+
 //this will be deleted
 export const fetchPromos = () => (dispatch) => {
 
@@ -148,15 +189,6 @@ export const addPromos = (promos) => ({
   payload: promos
 });
 
-export const addUsers = (users) => ({
-  type: ActionTypes.ADD_USERS,
-  payload: users
-});
-
-export const UsersFailed = (errmess) => ({
-  type: ActionTypes.USERS_FAILED,
-  payload: errmess
-});
 //post a new user
 export const postUser = (firstName, lastName, username, email, password, age, gender) => (dispatch) => {
 
@@ -195,6 +227,16 @@ export const postUser = (firstName, lastName, username, email, password, age, ge
     .catch(error => { console.log('post users', error.message); 
     alert('Your user could not be posted\nError: ' + error.message); });
 };
+
+export const addUsers = (users) => ({
+  type: ActionTypes.ADD_USERS,
+  payload: users
+});
+
+export const UsersFailed = (errmess) => ({
+  type: ActionTypes.USERS_FAILED,
+  payload: errmess
+});
 
 // send the login data
 export const postLogin = (username, password) => (dispatch) => {
