@@ -10,15 +10,16 @@ const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
 var image = "";
+var listoOfIngredients = [];
 
-function Preview(){
-	if (image === ""){
-		return(
-			<img src='assets/images/drag.png' alt="preview" width="100%" height="100%"/>
+function Preview() {
+	if (image === "") {
+		return (
+			<img src='assets/images/drag.png' alt="preview" width="100%" height="100%" />
 		)
-	}else{
-		return(
-			<img src={image} alt="preview" width="100%" height="100%"/>
+	} else {
+		return (
+			<img src={image} alt="preview" width="100%" height="100%" />
 		)
 	}
 }
@@ -42,18 +43,54 @@ function Dropzone() {
 	return (
 		<div {...getRootProps()}>
 			<input {...getInputProps()} />
-			<Preview/>
+			<Preview />
 		</div>
 	)
 }
 
-function LoadIngredients( ingredients ){
-	var data = ingredients.ingredients.dishes.data;
-	console.log(JSON.stringify(data));
-	return(
-		<div>
-		</div>
-	)
+function LoadIngredients(ingredients) {
+	if (ingredients.ingredients.dishes.data) {
+		return (
+			<div>
+				<ul className="list-unstyled">
+					{ingredients.ingredients.dishes.data.map((data) => {
+						return (
+							<li key={data._id}>
+								<p>{data.name}</p>
+							</li>
+						);
+					})}
+				</ul>
+				<Row className="form-group">
+					<Label htmlFor="ingredients" md={2}>Selecciones los ingredientes</Label>
+							{ingredients.ingredients.dishes.data.map((data) => {
+								return(
+									<Col md={2}>
+										<Label check>
+											<Control.checkbox model= {`. ${data.name}`} id={data._id} name={data.name}
+											className="form-check-input"
+											/>
+										<strong>{data.name}</strong>
+									</Label>
+								</Col>
+								)
+							})}
+				</Row>
+			</div>
+		)
+	} else {
+		return (
+			<div></div>
+		)
+	}
+}
+
+function IngredientsToList(values){
+	listoOfIngredients = []
+	for (var key in values) 
+		if (values.hasOwnProperty(key))
+			if(values[key] === true)
+				listoOfIngredients.push(key)
 }
 
 class Create extends Component {
@@ -65,6 +102,7 @@ class Create extends Component {
 	}
 
 	handleSubmit(values) {
+		IngredientsToList(values);
 		console.log("el json es " + JSON.stringify(values));
 		alert("El json es " + JSON.stringify(values));
 	}
@@ -90,10 +128,11 @@ class Create extends Component {
 								<Label htmlFor="image" md={2}>Imagen</Label>
 								<Col md={10}>
 									<Dropzone />
-									<LoadIngredients ingredients = {this.props.ingredients} />
-								</Col>								
+								</Col>
 							</Row>
-							
+
+							<LoadIngredients ingredients={this.props.ingredients} />
+
 							<Row className="form-group">
 								<Label htmlFor="name" md={2}>Nombre de la receta</Label>
 								<Col md={10}>
