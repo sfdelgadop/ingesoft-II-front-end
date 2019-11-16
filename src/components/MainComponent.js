@@ -6,7 +6,7 @@ import Contact from './ContactComponent';
 import DishDetail from './DishdetailComponent';
 import Options from './OptionsComponent';
 import Create from './DishCreationComponent';
-import { postComment, postUser, postLogin, fetchDishes, fetchComments, fetchPromos, fetchIngredients } from '../redux/ActionCreators';
+import { postComment, postDish, postUser, postLogin, fetchDishes, fetchComments, fetchPromos, fetchIngredients } from '../redux/ActionCreators';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 
@@ -24,6 +24,7 @@ const mapStateToProps = state => {
 //map the diferent data from post anfetch into propeties
 const mapDispatchToProps = dispatch => ({
 
+  postDish: ( name, ingredients, description, procedure, photos) => dispatch(postDish( name, ingredients,description, procedure, photos)),
   postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
   postUser:(firstName, lastName, username, email, password, age, gender) => dispatch(postUser(firstName, lastName, username, email, password, age, gender)),
   postLogin: (username,pasword) => dispatch(postLogin(username,pasword)),
@@ -73,7 +74,7 @@ class Main extends Component {
               <Route exact path='/home' component={() => <Menu dishes={this.props.dishes} />} />
               <Route path='/script/:dishId' component={DishWithId} />
               <Route exact path='/contactus' component={Contact} />
-              <Route exact path='/create' component={() => <Create ingredients={this.props.ingredients}/>}/>
+              <Route exact path='/create' component={() => <Create ingredients={this.props.ingredients} postDish = {this.props.postDish}/>}/>
               <Redirect to="/home" />
             </Switch>
           </div>

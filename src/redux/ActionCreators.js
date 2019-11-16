@@ -1,11 +1,12 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
+import { sha256 } from 'js-sha256';
 
 export const addComment = (comment) => ({
   type: ActionTypes.ADD_COMMENT,
   payload: comment
 });
-//send the comments to the back-end 
+//send the comments to the back-end
 export const postComment = (dishId, rating, author, comment) => (dispatch) => {
 
   const newComment = {
@@ -15,8 +16,6 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) => {
     comment: comment
   };
   newComment.date = new Date().toISOString();
-
-  alert("El json es " + JSON.stringify(newComment));
 
   return fetch(baseUrl + 'crear-comments', {
     method: "POST",
@@ -79,6 +78,51 @@ export const addDishes = (dishes) => ({
   type: ActionTypes.ADD_DISHES,
   payload: dishes
 });
+
+export const addDish = (dish) => ({
+  type: ActionTypes.ADD_DISHES,
+  payload: dish
+});
+
+export const postDish = ( name, ingredients, description, procedure, photos) => (dispatch) => {
+
+  const newDish = {
+    name: name,
+    ingredients: ingredients,
+    procedure: procedure,
+    photos: photos,
+    description: description
+  };
+  newDish.recipe_id = sha256(JSON.stringify(newDish));
+  newDish.date = new Date().toISOString();
+
+  alert("El json es " + JSON.stringify(newDish));
+
+  return fetch(baseUrl + 'crear-recipeee', {
+    method: "POST",
+    body: JSON.stringify(newDish),
+    headers: {
+      "Content-Type": "application/json"
+    },
+    credentials: "same-origin"
+  })
+    .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+      error => {
+        throw error;
+      })
+    .then(response => response.json())
+    .then(response => dispatch(addDish(response)))
+    .catch(error => { console.log('post dishes', error.message); alert('Your dish could not be posted\nError: ' + error.message); });
+};
+
 
 //get the ingredients
 

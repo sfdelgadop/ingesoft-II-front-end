@@ -9,17 +9,17 @@ import { useDropzone } from 'react-dropzone';
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
-var image = "";
-var listoOfIngredients = [];
+var photos = "";
+var listOfIngredients = [];
 
 function Preview() {
-	if (image === "") {
+	if (photos === "") {
 		return (
-			<img src='assets/images/drag.png' alt="preview" width="100%" height="100%" />
+			<img src='assets/images/drop.jpeg' alt="preview" width="100%" height="100%" />
 		)
 	} else {
 		return (
-			<img src={image} alt="preview" width="100%" height="100%" />
+			<img src={photos} alt="preview" width="100%" height="100%" />
 		)
 	}
 }
@@ -32,7 +32,7 @@ function Dropzone() {
 		reader.onerror = () => alert('file reading has failed')
 		reader.onload = () => {
 			const binaryStr = reader.result;
-			image = binaryStr;
+			photos = binaryStr;
 			console.log(binaryStr);
 		}
 
@@ -52,15 +52,6 @@ function LoadIngredients(ingredients) {
 	if (ingredients.ingredients.dishes.data) {
 		return (
 			<div>
-				<ul className="list-unstyled">
-					{ingredients.ingredients.dishes.data.map((data) => {
-						return (
-							<li key={data._id}>
-								<p>{data.name}</p>
-							</li>
-						);
-					})}
-				</ul>
 				<Row className="form-group">
 					<Label htmlFor="ingredients" md={2}>Selecciones los ingredientes</Label>
 							{ingredients.ingredients.dishes.data.map((data) => {
@@ -86,11 +77,11 @@ function LoadIngredients(ingredients) {
 }
 
 function IngredientsToList(values){
-	listoOfIngredients = []
+	listOfIngredients = []
 	for (var key in values) 
 		if (values.hasOwnProperty(key))
 			if(values[key] === true)
-				listoOfIngredients.push(key)
+				listOfIngredients.push(key)
 }
 
 class Create extends Component {
@@ -103,8 +94,7 @@ class Create extends Component {
 
 	handleSubmit(values) {
 		IngredientsToList(values);
-		console.log("el json es " + JSON.stringify(values));
-		alert("El json es " + JSON.stringify(values));
+		this.props.postDish( values.name, listOfIngredients, values.description, values.procedure, photos);
 	}
 
 	render() {
@@ -166,7 +156,7 @@ class Create extends Component {
 							<Row className="form-group">
 								<Label htmlFor="message" md={2}>Procedimiento</Label>
 								<Col md={10}>
-									<Control.textarea model=".Procedure" id="procedure" name="procedure"
+									<Control.textarea model=".procedure" id="procedure" name="procedure"
 										rows="22"
 										className="form-control" />
 								</Col>

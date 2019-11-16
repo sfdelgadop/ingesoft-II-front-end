@@ -7,6 +7,7 @@
     "bootstrap-social": "^5.1.1",
     "cross-fetch": "^3.0.4",
     "font-awesome": "^4.7.0",
+    "js-sha256": "^0.9.0",
     "mdbootstrap": "^4.8.10",
     "mdbreact": "^4.21.1",
     "react": "^16.10.1",
