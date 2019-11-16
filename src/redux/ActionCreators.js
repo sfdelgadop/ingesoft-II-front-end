@@ -93,7 +93,7 @@ export const postDish = ( name, ingredients, description, procedure, photos) => 
     photos: photos,
     description: description
   };
-  newDish.recipe_id = sha256(JSON.stringify(newDish));
+  newDish.id = sha256(JSON.stringify(newDish));
   newDish.date = new Date().toISOString();
 
   alert("El json es " + JSON.stringify(newDish));
