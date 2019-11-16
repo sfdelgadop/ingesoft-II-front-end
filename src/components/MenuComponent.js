@@ -60,7 +60,7 @@ class CommentForm extends Component {
 							<RenderDish dish={this.props.dish} />
 						</div>
 						<center>
-							<Link to={`/menu/${this.props.dish.id}`} >
+							<Link to={`/script/${this.props.dish.id}`} >
 								<Button >
 									Ver Más
 								</Button>
