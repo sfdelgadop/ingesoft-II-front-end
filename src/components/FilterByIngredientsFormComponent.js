@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Label, Col, Row, Modal, ModalHeader, ModalBody, } from 'reactstrap';
 import { Control, LocalForm } from 'react-redux-form';
+import { withRouter } from "react-router-dom";
 
-var listOfIngredient = [];
+var listOfIngredient = "";
 
 function LoadIngredients(ingredients) {
 	if (ingredients.ingredients.dishes.data) {
@@ -33,12 +34,16 @@ function LoadIngredients(ingredients) {
 }
 
 function IngredientsToList(values){
-	listOfIngredient = []
+	listOfIngredient = ""
 	for (var key in values) 
 		if (values.hasOwnProperty(key))
 			if(values[key] === true)
-				listOfIngredient.push(key);
-	alert(JSON.stringify(listOfIngredient));
+				if(listOfIngredient === ""){
+					listOfIngredient += key.trim();	
+				}else{
+					listOfIngredient = listOfIngredient.trim() + "," + key.trim();
+				}
+	//alert(JSON.stringify(listOfIngredient));
 }
 
 
@@ -64,8 +69,7 @@ class FilterByIngredient extends Component {
 	handleSubmit(values) {
 		this.toggleModal();
 		IngredientsToList(values);
-
-
+		this.props.history.push(`/by/${listOfIngredient}`);
 	}
 	render() {
 		return (
@@ -91,4 +95,4 @@ class FilterByIngredient extends Component {
 	}
 }
 
-export default FilterByIngredient;
+export default withRouter(FilterByIngredient);

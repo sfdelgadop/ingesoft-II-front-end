@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import LoginForm from './LoginComponent';
 import UserCreation from './UserCreationComponent';
-import FilterByIngredient from './FilterByIngredientsComponent';
+import FilterByIngredient from './FilterByIngredientsFormComponent';
 import { Link } from 'react-router-dom';
 
 // this is the left menu

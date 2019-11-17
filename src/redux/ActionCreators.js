@@ -163,6 +163,50 @@ export const addIngredients = (ingredients) => ({
   payload: ingredients
 });
 
+//get the dishes by a filter
+
+export const fetchFilter = ( listOgIngredients ) => (dispatch) => {
+
+  dispatch(filtersLoading(true));
+  const newUser = {
+    listOgIngredients: listOgIngredients,
+
+  };
+
+  return fetch(baseUrl + 'ver-recipe')
+    .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+      error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      })
+    .then(response => response.json())
+    .then(filters => dispatch(addFilters(filters)))
+    .catch(error => dispatch(filtersFailed(error.message)));
+}
+
+export const filtersLoading = () => ({
+  type: ActionTypes.FILTER_LOADING
+});
+
+export const filtersFailed = (errmess) => ({
+  type: ActionTypes.FILTER_FAILED,
+  payload: errmess
+});
+
+export const addFilters = (filters) => ({
+  type: ActionTypes.ADD_FILTER,
+  payload: filters
+});
+
+
 // get the diferent comments
 export const fetchComments = () => (dispatch) => {
   return fetch(baseUrl + 'ver-comments')
