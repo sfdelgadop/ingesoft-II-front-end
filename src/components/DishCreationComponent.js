@@ -78,10 +78,10 @@ function LoadIngredients(ingredients) {
 
 function IngredientsToList(values){
 	listOfIngredients = []
-	for (var key in values) 
+	for (var key in values)
 		if (values.hasOwnProperty(key))
 			if(values[key] === true)
-				listOfIngredients.push(key)
+				listOfIngredients.push(key.trim())
 }
 
 class Create extends Component {

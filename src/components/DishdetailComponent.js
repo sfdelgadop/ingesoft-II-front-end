@@ -180,6 +180,24 @@ const DishDetail = (props) => {
 						<RenderDish dish={props.dish} />
 					</div>
 					<div className="col-12 col-md-6">
+						<h3>Ingredientes</h3>
+						<br/>
+						<ul className="list-unstyled">
+							{props.dish.ingredients.map((ingredient) => {
+								return (
+									<li>	{ingredient}	</li>
+								);
+							})}
+						</ul>
+						<br/>
+						<br/>
+
+						<h3>Procedimiento</h3>
+						<br/>
+						<br/>
+						<h4>{props.dish.procedure}</h4>
+						<br/>
+						<br/>
 						<RenderComments comments={props.comments}
 							postComment={props.postComment}
 							dishId={props.dish.id} />
