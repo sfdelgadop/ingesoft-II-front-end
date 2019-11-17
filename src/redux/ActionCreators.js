@@ -1,11 +1,12 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
+import { sha256 } from 'js-sha256';
 
 export const addComment = (comment) => ({
   type: ActionTypes.ADD_COMMENT,
   payload: comment
 });
-//send the comments to the back-end 
+//send the comments to the back-end
 export const postComment = (dishId, rating, author, comment) => (dispatch) => {
 
   const newComment = {
@@ -15,8 +16,6 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) => {
     comment: comment
   };
   newComment.date = new Date().toISOString();
-
-  alert("El json es " + JSON.stringify(newComment));
 
   return fetch(baseUrl + 'crear-comments', {
     method: "POST",
@@ -79,6 +78,133 @@ export const addDishes = (dishes) => ({
   type: ActionTypes.ADD_DISHES,
   payload: dishes
 });
+
+export const addDish = (dish) => ({
+  type: ActionTypes.ADD_DISHES,
+  payload: dish
+});
+
+export const postDish = ( name, ingredients, description, procedure, photos) => (dispatch) => {
+
+  const newDish = {
+    name: name,
+    ingredients: ingredients,
+    procedure: procedure,
+    photos: photos,
+    description: description
+  };
+  newDish.id = sha256(JSON.stringify(newDish));
+  newDish.date = new Date().toISOString();
+  newDish.user_id = 1001;
+
+  alert("El json es " + JSON.stringify(newDish));
+
+  return fetch(baseUrl + 'crear-recipe', {
+    method: "POST",
+    body: JSON.stringify(newDish),
+    headers: {
+      "Content-Type": "application/json"
+    },
+    credentials: "same-origin"
+  })
+    .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+      error => {
+        throw error;
+      })
+    .then(response => response.json())
+    .then(response => dispatch(addDish(response)))
+    .catch(error => { console.log('post dishes', error.message); alert('Your dish could not be posted\nError: ' + error.message); });
+};
+
+
+//get the ingredients
+
+export const fetchIngredients = () => (dispatch) => {
+
+  dispatch(ingredientsLoading(true));
+
+  return fetch(baseUrl + 'ver-ingredient')
+    .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+      error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      })
+    .then(response => response.json())
+    .then(ingredients => dispatch(addIngredients(ingredients)))
+    .catch(error => dispatch(ingredientsFailed(error.message)));
+}
+
+export const ingredientsLoading = () => ({
+  type: ActionTypes.INGREDIENT_LOADING
+});
+
+export const ingredientsFailed = (errmess) => ({
+  type: ActionTypes.INGREDIENT_FAILED,
+  payload: errmess
+});
+
+export const addIngredients = (ingredients) => ({
+  type: ActionTypes.ADD_INGREDIENT,
+  payload: ingredients
+});
+
+//get the dishes by a filter
+
+export const fetchFilter = ( listOgIngredients ) => (dispatch) => {
+
+  dispatch(filtersLoading(true));
+  const url = baseUrl + 'buscar-recipe-by-ingredients/' + listOgIngredients;
+
+  return fetch(url)
+    .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+      error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      })
+    .then(response => response.json())
+    .then(filters => dispatch(addFilters(filters)))
+    .catch(error => dispatch(filtersFailed(error.message)));
+}
+
+export const filtersLoading = () => ({
+  type: ActionTypes.FILTER_LOADING
+});
+
+export const filtersFailed = (errmess) => ({
+  type: ActionTypes.FILTER_FAILED,
+  payload: errmess
+});
+
+export const addFilters = (filters) => ({
+  type: ActionTypes.ADD_FILTER,
+  payload: filters
+});
+
+
 // get the diferent comments
 export const fetchComments = () => (dispatch) => {
   return fetch(baseUrl + 'ver-comments')
@@ -110,6 +236,7 @@ export const addComments = (comments) => ({
   type: ActionTypes.ADD_COMMENTS,
   payload: comments
 });
+
 //this will be deleted
 export const fetchPromos = () => (dispatch) => {
 
@@ -148,15 +275,6 @@ export const addPromos = (promos) => ({
   payload: promos
 });
 
-export const addUsers = (users) => ({
-  type: ActionTypes.ADD_USERS,
-  payload: users
-});
-
-export const UsersFailed = (errmess) => ({
-  type: ActionTypes.USERS_FAILED,
-  payload: errmess
-});
 //post a new user
 export const postUser = (firstName, lastName, username, email, password, age, gender) => (dispatch) => {
 
@@ -195,6 +313,16 @@ export const postUser = (firstName, lastName, username, email, password, age, ge
     .catch(error => { console.log('post users', error.message); 
     alert('Your user could not be posted\nError: ' + error.message); });
 };
+
+export const addUsers = (users) => ({
+  type: ActionTypes.ADD_USERS,
+  payload: users
+});
+
+export const UsersFailed = (errmess) => ({
+  type: ActionTypes.USERS_FAILED,
+  payload: errmess
+});
 
 // send the login data
 export const postLogin = (username, password) => (dispatch) => {

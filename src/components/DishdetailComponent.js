@@ -17,7 +17,7 @@ function RenderDish({ dish }) {
 	return (
 		<div className="col-12  m-1">
 			<Card>
-				<CardImg top src={dish.image} alt={dish.name} />
+				<CardImg top src={dish.photos} alt={dish.name} />
 				<CardBody>
 					<CardTitle>{dish.name}</CardTitle>
 					<CardText>{dish.description}</CardText>
@@ -167,7 +167,7 @@ const DishDetail = (props) => {
 			<div className="container">
 				<div className="row">
 					<Breadcrumb>
-						<BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+						<BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
 						<BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
 					</Breadcrumb>
 					<div className="col-12">
@@ -180,6 +180,24 @@ const DishDetail = (props) => {
 						<RenderDish dish={props.dish} />
 					</div>
 					<div className="col-12 col-md-6">
+						<h3>Ingredientes</h3>
+						<br/>
+						<ul className="list-unstyled">
+							{props.dish.ingredients.map((ingredient) => {
+								return (
+									<li>	{ingredient}	</li>
+								);
+							})}
+						</ul>
+						<br/>
+						<br/>
+
+						<h3>Procedimiento</h3>
+						<br/>
+						<br/>
+						<h4>{props.dish.procedure}</h4>
+						<br/>
+						<br/>
 						<RenderComments comments={props.comments}
 							postComment={props.postComment}
 							dishId={props.dish.id} />
