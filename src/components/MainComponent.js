@@ -6,7 +6,9 @@ import Contact from './ContactComponent';
 import DishDetail from './DishdetailComponent';
 import Options from './OptionsComponent';
 import Create from './DishCreationComponent';
-import { postComment, postDish, postUser, postLogin, fetchDishes, fetchComments, fetchPromos, fetchIngredients } from '../redux/ActionCreators';
+import FilterByIngredients from './FilterByIngredientComponent';
+import { postComment, postDish, postUser, postLogin, 
+  fetchDishes, fetchComments, fetchPromos, fetchIngredients, fetchFilter } from '../redux/ActionCreators';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 
@@ -17,7 +19,8 @@ const mapStateToProps = state => {
     comments: state.comments,
     promotions: state.promotions,
     leaders: state.leaders,
-    ingredients: state.ingredients
+    ingredients: state.ingredients,
+    filters: state.filters,
   }
 }
 
@@ -31,8 +34,10 @@ const mapDispatchToProps = dispatch => ({
   fetchDishes: () => { dispatch(fetchDishes())},
   fetchIngredients: () => { dispatch(fetchIngredients())},
   fetchComments: () => dispatch(fetchComments()),
-  fetchPromos: () => dispatch(fetchPromos())
+  fetchPromos: () => dispatch(fetchPromos()),
+  fetchFilter: (listOgIngredients) => dispatch(fetchFilter(listOgIngredients)),
 });
+
 
 //main componnent
 class Main extends Component {
@@ -66,6 +71,13 @@ class Main extends Component {
       );
     };
 
+    const FilterIn = ({match}) => {
+      return(
+        <FilterByIngredients listOfIngredients = {match.params.listOfIngredients}/>
+
+      )
+    }
+
     return (
       <div>
         <div className="row">
@@ -75,13 +87,15 @@ class Main extends Component {
               <Route path='/script/:dishId' component={DishWithId} />
               <Route exact path='/contactus' component={Contact} />
               <Route exact path='/create' component={() => <Create ingredients={this.props.ingredients} postDish = {this.props.postDish}/>}/>
+              <Route path='/by/:listOfIngredients' component={FilterIn} />
               <Redirect to="/home" />
             </Switch>
           </div>
           <div className="col-4">
             <Header />
             <Options postLogin = {this.props.postLogin} 
-                    postUser={this.props.postUser}/>
+                    postUser={this.props.postUser}
+                    ingredients={this.props.ingredients}/>
           </div>
         </div>
         <div className="row">

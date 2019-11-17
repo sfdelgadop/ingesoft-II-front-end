@@ -95,10 +95,11 @@ export const postDish = ( name, ingredients, description, procedure, photos) => 
   };
   newDish.recipe_id = sha256(JSON.stringify(newDish));
   newDish.date = new Date().toISOString();
+  newDish.user_id = 1001;
 
   alert("El json es " + JSON.stringify(newDish));
 
-  return fetch(baseUrl + 'crear-recipeee', {
+  return fetch(baseUrl + 'crear-recipe', {
     method: "POST",
     body: JSON.stringify(newDish),
     headers: {
@@ -162,6 +163,47 @@ export const addIngredients = (ingredients) => ({
   type: ActionTypes.ADD_INGREDIENT,
   payload: ingredients
 });
+
+//get the dishes by a filter
+
+export const fetchFilter = ( listOgIngredients ) => (dispatch) => {
+
+  dispatch(filtersLoading(true));
+  const url = baseUrl + 'buscar-recipe-by-ingredients/' + listOgIngredients;
+
+  return fetch(url)
+    .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+      error => {
+        var errmess = new Error(error.message);
+        throw errmess;
+      })
+    .then(response => response.json())
+    .then(filters => dispatch(addFilters(filters)))
+    .catch(error => dispatch(filtersFailed(error.message)));
+}
+
+export const filtersLoading = () => ({
+  type: ActionTypes.FILTER_LOADING
+});
+
+export const filtersFailed = (errmess) => ({
+  type: ActionTypes.FILTER_FAILED,
+  payload: errmess
+});
+
+export const addFilters = (filters) => ({
+  type: ActionTypes.ADD_FILTER,
+  payload: filters
+});
+
 
 // get the diferent comments
 export const fetchComments = () => (dispatch) => {
