@@ -81,7 +81,8 @@ class Main extends Component {
           <div className="col-4">
             <Header />
             <Options postLogin = {this.props.postLogin} 
-                    postUser={this.props.postUser}/>
+                    postUser={this.props.postUser}
+                    ingredients={this.props.ingredients}/>
           </div>
         </div>
         <div className="row">
