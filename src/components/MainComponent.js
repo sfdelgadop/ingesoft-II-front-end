@@ -73,7 +73,7 @@ class Main extends Component {
 
     const FilterIn = ({match}) => {
       return(
-        <FilterByIngredients filter = {match.params.listOfIngredients}/>
+        <FilterByIngredients listOfIngredients = {match.params.listOfIngredients}/>
 
       )
     }

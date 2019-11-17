@@ -10,7 +10,7 @@ function RenderDish({ dish }) {
 	return (
 		<div >
 			<Card>
-				<CardImg top src={dish.image} alt={dish.name} />
+				<CardImg top src={dish.photos} alt={dish.name} />
 				<CardBody>
 					<CardTitle>{dish.name}</CardTitle>
 					<CardText>{dish.description}</CardText>
@@ -47,7 +47,7 @@ class CommentForm extends Component {
 		return (
 			<div>
 				<Card onClick={this.toggleModal}>
-					<CardImg width="100%" src={this.props.dish.image} alt={this.props.dish.name} />
+					<CardImg width="100%" src={this.props.dish.photos} alt={this.props.dish.name} />
 					<CardBody>
 						<CardTitle>{this.props.dish.name}</CardTitle>
 						<CardText>{this.props.dish.description}</CardText>
@@ -74,7 +74,6 @@ class CommentForm extends Component {
 }
 
 const Menu = (props) => {
-
 	const menu = props.dishes.dishes.map((dish) => {
 		return (
 			<div className="col-12 col-md-4" key={dish.id}>

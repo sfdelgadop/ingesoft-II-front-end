@@ -89,6 +89,7 @@ class CommentForm extends Component {
 
 const Filter = (props) => {
 
+//	alert(JSON.stringify(props.dishes.filters))
 	const menu = props.dishes.filters.map((dish) => {
 		return (
 			<div className="col-12 col-md-4" key={dish.id}>
@@ -123,7 +124,7 @@ const Filter = (props) => {
 				<div className="row">
 					<div className="col-12">
 						<center>
-							<h1>Populares</h1>
+							<h1>Filtrado</h1>
 						</center>
 						<hr />
 					</div>

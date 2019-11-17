@@ -95,10 +95,11 @@ export const postDish = ( name, ingredients, description, procedure, photos) => 
   };
   newDish.recipe_id = sha256(JSON.stringify(newDish));
   newDish.date = new Date().toISOString();
+  newDish.user_id = 1001;
 
   alert("El json es " + JSON.stringify(newDish));
 
-  return fetch(baseUrl + 'crear-recipeee', {
+  return fetch(baseUrl + 'crear-recipe', {
     method: "POST",
     body: JSON.stringify(newDish),
     headers: {
@@ -168,12 +169,9 @@ export const addIngredients = (ingredients) => ({
 export const fetchFilter = ( listOgIngredients ) => (dispatch) => {
 
   dispatch(filtersLoading(true));
-  const newUser = {
-    listOgIngredients: listOgIngredients,
+  const url = baseUrl + 'buscar-recipe-by-ingredients/' + listOgIngredients;
 
-  };
-
-  return fetch(baseUrl + 'ver-recipe')
+  return fetch(url)
     .then(response => {
       if (response.ok) {
         return response;
