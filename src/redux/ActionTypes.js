@@ -1,12 +1,20 @@
+//the different types of action
+
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const ADD_COMMENTS = 'ADD_COMMENTS';
 export const COMMENTS_FAILED = 'COMMENTS_FAILED';
 export const DISHES_LOADING = 'DISHES_LOADING';
 export const DISHES_FAILED = 'DISHES_FAILED';
 export const ADD_DISHES = 'ADD_DISHES';
-
 export const PROMOS_LOADING = 'PROMOS_LOADING';
 export const ADD_PROMOS = 'ADD_PROMOS';
 export const PROMOS_FAILED = 'PROMOS_FAILED';
 export const ADD_USERS = 'ADD_COMMENTS';
 export const USERS_FAILED = 'COMMENTS_FAILED';
+export const INGREDIENT_LOADING = 'INGREDIENT_LOADING';
+export const INGREDIENT_FAILED = 'INGREDIENT_FAILED';
+export const ADD_INGREDIENT = 'ADD_INGREDIENT';
+
+export const FILTER_LOADING = 'FILTER_LOADING';
+export const FILTER_FAILED = 'FILTER_FAILED';
+export const ADD_FILTER = 'ADD_FILTER';

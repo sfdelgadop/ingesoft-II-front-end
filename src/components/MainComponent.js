@@ -5,30 +5,41 @@ import Menu from './MenuComponent';
 import Contact from './ContactComponent';
 import DishDetail from './DishdetailComponent';
 import Options from './OptionsComponent';
-import { postComment, postUser, postLogin, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
+import Create from './DishCreationComponent';
+import FilterByIngredients from './FilterByIngredientComponent';
+import { postComment, postDish, postUser, postLogin, 
+  fetchDishes, fetchComments, fetchPromos, fetchIngredients, fetchFilter } from '../redux/ActionCreators';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 
-
+//map the diferent data into propeties
 const mapStateToProps = state => {
   return {
     dishes: state.dishes,
     comments: state.comments,
     promotions: state.promotions,
-    leaders: state.leaders
+    leaders: state.leaders,
+    ingredients: state.ingredients,
+    filters: state.filters,
   }
 }
 
+//map the diferent data from post anfetch into propeties
 const mapDispatchToProps = dispatch => ({
 
+  postDish: ( name, ingredients, description, procedure, photos) => dispatch(postDish( name, ingredients,description, procedure, photos)),
   postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
   postUser:(firstName, lastName, username, email, password, age, gender) => dispatch(postUser(firstName, lastName, username, email, password, age, gender)),
   postLogin: (username,pasword) => dispatch(postLogin(username,pasword)),
   fetchDishes: () => { dispatch(fetchDishes())},
+  fetchIngredients: () => { dispatch(fetchIngredients())},
   fetchComments: () => dispatch(fetchComments()),
-  fetchPromos: () => dispatch(fetchPromos())
+  fetchPromos: () => dispatch(fetchPromos()),
+  fetchFilter: (listOgIngredients) => dispatch(fetchFilter(listOgIngredients)),
 });
 
+
+//main componnent
 class Main extends Component {
 
   constructor(props) {
@@ -39,6 +50,7 @@ class Main extends Component {
     this.props.fetchDishes();
     this.props.fetchComments();
     this.props.fetchPromos();
+    this.props.fetchIngredients();
   }
 
   onDishSelect(dishId) {
@@ -46,7 +58,7 @@ class Main extends Component {
   }
 
   render() {
-
+    //pass the props of a dish to the dishDetailComponent
     const DishWithId = ({ match }) => {
       return (
         <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]}
@@ -59,21 +71,31 @@ class Main extends Component {
       );
     };
 
+    const FilterIn = ({match}) => {
+      return(
+        <FilterByIngredients listOfIngredients = {match.params.listOfIngredients}/>
+
+      )
+    }
+
     return (
       <div>
         <div className="row">
           <div className="col-8">
             <Switch>
-              <Route exact path='/menu' component={() => <Menu dishes={this.props.dishes} />} />
-              <Route path='/menu/:dishId' component={DishWithId} />
-              <Route exact path='/contactus' component={Contact} />} />
-                <Redirect to="/menu" />
+              <Route exact path='/home' component={() => <Menu dishes={this.props.dishes} />} />
+              <Route path='/script/:dishId' component={DishWithId} />
+              <Route exact path='/contactus' component={Contact} />
+              <Route exact path='/create' component={() => <Create ingredients={this.props.ingredients} postDish = {this.props.postDish}/>}/>
+              <Route path='/by/:listOfIngredients' component={FilterIn} />
+              <Redirect to="/home" />
             </Switch>
           </div>
           <div className="col-4">
             <Header />
             <Options postLogin = {this.props.postLogin} 
-                    postUser={this.props.postUser}/>
+                    postUser={this.props.postUser}
+                    ingredients={this.props.ingredients}/>
           </div>
         </div>
         <div className="row">

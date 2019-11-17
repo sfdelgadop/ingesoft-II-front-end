@@ -1,8 +1,11 @@
-import React, {Component} from 'react';
-import {Button} from 'reactstrap';
+import React, { Component } from 'react';
+import { Button } from 'reactstrap';
 import LoginForm from './LoginComponent';
-import UserCreation from'./UserCreationComponent';
+import UserCreation from './UserCreationComponent';
+import FilterByIngredient from './FilterByIngredientsFormComponent';
+import { Link } from 'react-router-dom';
 
+// this is the left menu
 class Options extends Component {
 
 	render() {
@@ -13,15 +16,22 @@ class Options extends Component {
 						<br />
 						<h3>Ingredientes</h3>
 						<br />
-						<Button color="secondary" size="lg" block >Ingredientes disponibles</Button>{' '}
+						<FilterByIngredient ingredients={this.props.ingredients}/>
 						<br />
 						<Button color="secondary" size="lg" block >Ingredientes no deseados</Button>{' '}
 						<br />
 						<Button color="secondary" size="lg" block >Tipo de comida</Button>{' '}
 						<br />
+						<h3>O crea tus propias recetas</h3>
+						<br />
+						<Link to={`/create`} >
+							<Button  size="lg" block >Crear receta</Button>
+						</Link>
+						<br />
 					</div>
-					<UserCreation postUser = {this.props.postUser}/>
-          <LoginForm postLogin={this.props.postLogin} />
+					<UserCreation postUser={this.props.postUser} />
+					<LoginForm postLogin={this.props.postLogin} />
+
 				</div>
 			</div>
 		);

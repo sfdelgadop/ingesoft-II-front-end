@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Label, Col, Row, Modal, ModalHeader, ModalBody, } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
+//the conditions during the creation of user Form
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
@@ -9,7 +10,7 @@ const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val
 const isNumber = (val) => !isNaN(Number(val));
 
 
-
+//The user creation Form
 class UserCreationForm extends Component {
 	constructor(props) {
 		super(props);
@@ -30,7 +31,7 @@ class UserCreationForm extends Component {
 
 	handleSubmit(values) {
 		this.toggleModal();
-		this.props.postUser(values.firstName, values.lastName, values.username, 
+		this.props.postUser(values.firstName, values.lastName, values.username,
 			values.email, values.password, values.age, values.gender);
 
 	}

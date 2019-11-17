@@ -1,14 +1,14 @@
 import * as ActionTypes from './ActionTypes';
 // the recipes tracking
-export const Dishes = (state = { isLoading: true, errMess: null, dishes:[]}, action) => {
+export const Ingredients = (state = { isLoading: true, errMess: null, dishes:[]}, action) => {
     switch (action.type) {
-        case ActionTypes.ADD_DISHES:
+        case ActionTypes.ADD_INGREDIENT:
             return {...state, isLoading: false, errMess: null, dishes: action.payload};
 
-        case ActionTypes.DISHES_LOADING:
+        case ActionTypes.INGREDIENT_LOADING:
             return {...state, isLoading: true, errMess: null, dishes: []}
 
-        case ActionTypes.DISHES_FAILED:
+        case ActionTypes.INGREDIENT_FAILED:
             return {...state, isLoading: false, errMess: action.payload};
 
         default:

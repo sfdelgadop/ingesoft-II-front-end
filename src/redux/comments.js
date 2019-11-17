@@ -1,5 +1,5 @@
 import * as ActionTypes from './ActionTypes';
-
+//the comments fetch tracking
 export const Comments = (state = { errMess: null, comments:[]}, action) => {
   switch (action.type) {
     case ActionTypes.ADD_COMMENTS:

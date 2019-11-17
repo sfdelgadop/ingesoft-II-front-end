@@ -5,6 +5,20 @@ import {
 } from 'reactstrap';
 import { Loading } from './LoadingComponent';
 import { Link } from 'react-router-dom';
+import {fetchFilter} from '../redux/ActionCreators';
+import { connect } from 'react-redux';
+
+var i = true
+
+const mapStateToProps = state => {
+  return {
+    filters: state.filters,
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  fetchFilter: (listOfIngredients) => dispatch(fetchFilter(listOfIngredients)),
+});
 
 function RenderDish({ dish }) {
 	return (
@@ -73,8 +87,10 @@ class CommentForm extends Component {
 	}
 }
 
-const Menu = (props) => {
-	const menu = props.dishes.dishes.map((dish) => {
+const Filter = (props) => {
+
+//	alert(JSON.stringify(props.dishes.filters))
+	const menu = props.dishes.filters.map((dish) => {
 		return (
 			<div className="col-12 col-md-4" key={dish.id}>
 				<CommentForm dish={dish}  />
@@ -108,7 +124,7 @@ const Menu = (props) => {
 				<div className="row">
 					<div className="col-12">
 						<center>
-							<h1>Populares</h1>
+							<h1>Filtrado</h1>
 						</center>
 						<hr />
 					</div>
@@ -120,4 +136,19 @@ const Menu = (props) => {
 		);
 }
 
-export default Menu;
+class FilterByIngredients extends Component{
+	componentDidMount() {
+		if(i)
+			this.props.fetchFilter(this.props.listOfIngredients);
+			i = false
+	}
+
+	render(){
+		return(		
+			<Filter dishes = {this.props.filters}/>
+		)		
+	}
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilterByIngredients);
