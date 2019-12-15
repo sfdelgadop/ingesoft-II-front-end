@@ -75,7 +75,7 @@ class FilterByIngredient extends Component {
 		return (	
 			<div>
 				<Button  size="lg" block outline onClick={this.toggleModal}><span>Filtrar por ingredientes</span></Button>
-				<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} >
+				<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}  size="lg">
 					<ModalHeader toggle={this.toggleModal}>Seleccione los ingredientes de los que dispone</ModalHeader>
 					<ModalBody>
 						<LocalForm onSubmit={(values) => this.handleSubmit(values)}>

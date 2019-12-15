@@ -64,7 +64,7 @@ class CommentForm extends Component {
 						<CardText>{this.props.dish.description}</CardText>
 					</CardBody>
 				</Card>
-				<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} >
+				<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} size="lg">
 					<ModalHeader toggle={this.toggleModal}>{this.props.dish.name}</ModalHeader>
 					<ModalBody>
 						<div className="col-12">
