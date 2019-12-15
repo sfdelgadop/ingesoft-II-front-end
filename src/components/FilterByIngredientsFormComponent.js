@@ -75,24 +75,25 @@ class FilterByIngredient extends Component {
 		return (	
 			<div>
 				<Button  size="lg" block outline onClick={this.toggleModal}><span>Filtrar por ingredientes</span></Button>
-				<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}  size="lg">
-					<ModalHeader toggle={this.toggleModal}>Seleccione los ingredientes de los que dispone</ModalHeader>
-					<ModalBody>
-						<LocalForm onSubmit={(values) => this.handleSubmit(values)}>
-							<div class="col-sm">
-								<LoadIngredients ingredients={this.props.ingredients} />
-								<Row className="form-group">
-									<div className="col-sm">
-										<Button type="submit">
-											Filtrar
-                 						</Button>
-									</div>
-								</Row>
-							</div>							
-						</LocalForm>
-					</ModalBody>
+				
+				<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} size="lg">					
+						<ModalHeader toggle={this.toggleModal}>Seleccione los ingredientes de los que dispone</ModalHeader>
+						<ModalBody>
+							<LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+								<div class="col-sm">
+									<LoadIngredients ingredients={this.props.ingredients} />
+									<Row className="form-group">
+										<div className="col-sm">
+											<Button type="submit">
+												Filtrar
+											</Button>
+										</div>
+									</Row>
+								</div>							
+							</LocalForm>
+						</ModalBody>
 				</Modal>
-			</div>
+			</div>	
 		)
 	}
 }

@@ -35,4 +35,9 @@ address{
     nav-left: auto;
     nav-up: auto;
     nav-right: auto;
+    margin: auto;
+}
+
+.modal{
+    text-shadow:aqua;
 }
