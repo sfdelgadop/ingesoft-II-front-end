@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import {
-	Card, CardImg, CardText, CardBody, Button, Modal, ModalHeader, ModalBody,
-	CardTitle
-} from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, Button, Modal, ModalHeader, ModalBody,CardTitle } from 'reactstrap';
 import { Loading } from './LoadingComponent';
 import { Link } from 'react-router-dom';
 import {fetchFilter} from '../redux/ActionCreators';
@@ -92,7 +89,7 @@ const Filter = (props) => {
 //	alert(JSON.stringify(props.dishes.filters))
 	const menu = props.dishes.filters.map((dish) => {
 		return (
-			<div className="col-12 col-md-4" key={dish.id}>
+			<div className="col-12 col-md-12" key={dish.id}>
 				<CommentForm dish={dish}  />
 			</div>
 		);

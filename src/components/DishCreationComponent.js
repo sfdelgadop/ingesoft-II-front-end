@@ -1,7 +1,5 @@
 import React, { Component, useCallback } from 'react';
-import {
-	Button, Label, Col, Row, Breadcrumb, BreadcrumbItem
-} from 'reactstrap';
+import {Button, Label, Col, Row, Breadcrumb, BreadcrumbItem} from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
