@@ -13,11 +13,11 @@ function LoadIngredients(ingredients) {
 					<Label htmlFor="ingredients" md={2}></Label>
 							{ingredients.ingredients.dishes.data.map((data) => {
 								return(
-									<Col md={2}>
-										<Label check>
-											<Control.checkbox model= {`. ${data.name}`} id={data._id} name={data.name}
+								<Col md={3}>
+									<Label check>
+										<Control.checkbox model= {`. ${data.name}`} id={data._id} name={data.name}
 											className="form-check-input"
-											/>
+										/>
 										<strong>{data.name}</strong>
 									</Label>
 								</Col>
@@ -72,25 +72,28 @@ class FilterByIngredient extends Component {
 		this.props.history.push(`/by/${listOfIngredient}`);
 	}
 	render() {
-		return (
+		return (	
 			<div>
 				<Button  size="lg" block outline onClick={this.toggleModal}><span>Filtrar por ingredientes</span></Button>
-				<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} >
-					<ModalHeader toggle={this.toggleModal}>Seleccione los ingredientes de los que dispone</ModalHeader>
-					<ModalBody>
-						<LocalForm onSubmit={(values) => this.handleSubmit(values)}>
-							<LoadIngredients ingredients={this.props.ingredients} />
-							<Row className="form-group">
-								<Col md={{ size: 10, offset: 2 }}>
-									<Button type="submit">
-										Filtrar
-                  </Button>
-								</Col>
-							</Row>
-						</LocalForm>
-					</ModalBody>
+				
+				<Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal} size="lg">					
+						<ModalHeader toggle={this.toggleModal}>Seleccione los ingredientes de los que dispone</ModalHeader>
+						<ModalBody>
+							<LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+								<div class="col-sm">
+									<LoadIngredients ingredients={this.props.ingredients} />
+									<Row className="form-group">
+										<div className="col-sm">
+											<Button type="submit">
+												Filtrar
+											</Button>
+										</div>
+									</Row>
+								</div>							
+							</LocalForm>
+						</ModalBody>
 				</Modal>
-			</div>
+			</div>	
 		)
 	}
 }

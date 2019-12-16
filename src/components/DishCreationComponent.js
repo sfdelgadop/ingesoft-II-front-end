@@ -1,10 +1,8 @@
 import React, { Component, useCallback } from 'react';
-import {
-	Button, Label, Col, Row, Breadcrumb, BreadcrumbItem
-} from 'reactstrap';
+import {Button, Label, Col, Row, Breadcrumb, BreadcrumbItem} from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
-import { useDropzone } from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';	
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -56,11 +54,18 @@ function LoadIngredients(ingredients) {
 					<Label htmlFor="ingredients" md={2}>Selecciones los ingredientes</Label>
 							{ingredients.ingredients.dishes.data.map((data) => {
 								return(
-									<Col md={2}>
+									<Col md={3}>
 										<Label check>
-											<Control.checkbox model= {`. ${data.name}`} id={data._id} name={data.name}
-											className="form-check-input"
-											/>
+											<div className="Container">
+												<div className="row">
+													<div className="col-md">
+														<Control.checkbox model= {`. ${data.name}`} 
+														id={data._id} name={data.name}
+														className="form-check-input"
+														/>
+													</div>
+												</div>
+											</div>
 										<strong>{data.name}</strong>
 									</Label>
 								</Col>

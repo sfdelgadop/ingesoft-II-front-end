@@ -30,4 +30,14 @@ address{
 
 .navbar-dark {
     background-color: #5bc0de;
+    fill: blue;
+    nav-down: auto;
+    nav-left: auto;
+    nav-up: auto;
+    nav-right: auto;
+    margin: auto;
+}
+
+.modal{
+    text-shadow:aqua;
 }
